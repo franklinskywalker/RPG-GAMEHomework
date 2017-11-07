@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<meta charset="uft-8">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:700|Orbitron" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<style>
+    body {
+
+        background-image: url(http://www.roguesportal.com/wp-content/uploads/2017/08/tournament_of_power_stage_by_ricardorodrigues92-dbd5333.png);
+    }
+
+    .col-md-4 {
+        margin: 16px;
+        padding-top: 100px;
+    }
+
+    #goku {
+        margin: 50px;
+        width: 250px;
+        height: 350px;
+    }
+
+    #message {
+        font-family: 'Merriweather', serif;
+        color: red;
+    }
+
+    #vegeta {
+        margin: 100px;
+    }
+
+    h3 {
+        font-family: 'Orbitron', sans-serif;
+        color: #ebebeb;
+
+    }
+</style>
+
+
+
+
+
+<body>
+    <!--START OF NAV -->
+    <nav class="navbar navbar-default">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+        <img alt="RPG" src="http://orig13.deviantart.net/7fb6/f/2016/029/4/a/logo_redesign_dragon_ball_super_by_raulmejia-d9pszyg.png">
+            </div>
+        </div>
+    </nav>
+    <!--END NAV -->
+
+    <!--start of con-cl-rw-->
+   
+   
+        <!-- 16:9 aspect ratio -->
+        <div class="row">
+            <div class="col-md-6">
+                 
+                    <h3>Goku Ultra Instinct: <span id="ophealth"></span></h3>
+                    <img id="goku" src="https://orig00.deviantart.net/8f6e/f/2017/281/a/2/ultra_instinct_goku__break_the_limit___by_azer0xhd-dbpwm3r.png"></img>
+               </div>
+               <div class="col-md-6">
+                    <h3>Vegeta Super Saiyan Blue: <span id="health"></span></h3>
+                    <img id = "vegeta" src="https://static.comicvine.com/uploads/square_small/11112/111122896/5402110-super_saiyan_blue_vegeta__5_by_rayzorblade189-dad90xi.png"></img>
+               </div>
+          </div>
+          <!--col 3 -->
+          <div class="row">
+          <div class="col-md-12">
+               <button id="attack-button" onclick="attack()">Attack</button>
+               <button id="restart-game" hidden="true" onclick="restart()"> Restart Game </button>
+               <h3 id="message"></h3>
+          </div>
+          </div>
+</div>
+</body>
+<script>
+     let player = {
+          health: 250,
+          power: 25
+     };
+
+     let computer = {
+          health: 150,
+          power: 20
+     };
+     var attack = () => {
+          let attackButton = determineattack(player.power);
+          let restartButton = document.getElementById("restart-game");
+          let message = document.getElementById("message");
+          let playerattack = Math.floor(Math.random() * player.power);
+          console.log(playerattack);
+
+          computer.health -= playerattack;
+
+          printToScreen();
+
+          if (gameover(computer.health)) {
+               message.innerText = "You Have Won!!";
+               attackButton.hidden = true;
+               restartButton.hidden = false;
+               return;
+          }
+
+
+
+          attackButton.disabled = true;
+          message.innerText = "Got you!";
+
+          setTimeout(() => {
+               let computerattack = determineattack(computer.power);
+               player.health -= computerattack;
+               printToScreen();
+
+               if (gameover(player.health)) {
+                    message.innerText = "You Have lost!!";
+                    attackButton.hidden = true;
+                    restartButton.hidden = false;
+                    return;
+               }
+               attackButton.disabled = false;
+          }, 350);
+     };
+     const determineattack = (power) => {
+          return Math.floor(Math.random() * power);
+
+     };
+     const gameover = (health) => {
+          return health <= 0;
+     };
+
+
+     const printToScreen = () => {
+          document.getElementById("ophealth").innerText = computer.health;
+          document.getElementById("health").innerText = player.health;
+
+     };
+     printToScreen();
+</script>
+
+</html>
